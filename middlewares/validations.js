@@ -59,7 +59,8 @@ export const existValidation = async (searchRow, table, value) => {
 
       connection = await pool.getConnection();
       const [rows, fields] = await connection.execute(query);
-      if (rows.includes(value)) {
+      console.log(rows);
+      if (rows.includes({id: value})) {
         return value;
       } else {
         throw new Error(

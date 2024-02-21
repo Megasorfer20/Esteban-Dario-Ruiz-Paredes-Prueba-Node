@@ -38,7 +38,7 @@ const validations = async (parameter, content) => {
           barcode: await uniqueValidation("barcode", "productos", barcode),
           presentacion: await lenghtValidation(nombre, 25),
         };
-        return `INTERT INTO productos(nombre,barcode, presentacion) VALUES (${values.nombre},${values.barcode},${values.presentacion})`;
+        return `INSERT INTO productos(nombre,barcode, presentacion) VALUES ("${values.nombre}","${values.barcode}","${values.presentacion}")`;
       }
     }
 
@@ -53,7 +53,7 @@ const validations = async (parameter, content) => {
           valor: valor,
           compraMaxima: Number(compraMaxima),
         };
-        return `INTERT INTO tiendas_productos(id_producto,id_tienda, valor, compra_maxima) VALUES (${values.idProducto},${values.idTienda},${values.valor},${values.compraMaxima})`;
+        return `INSERT INTO tiendas_productos(id_producto,id_tienda, valor, compra_maxima) VALUES ("${values.idProducto}","${values.idTienda}","${values.valor}","${values.compraMaxima}")`;
       }
     }
   } catch (error) {
