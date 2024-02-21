@@ -6,19 +6,23 @@ import {
 } from "../middlewares/validations.js";
 
 export const postParameter = async (req, res) => {
+  let connection;
   try {
     const { parameter } = req.params;
+
+    const query = await validations(parameter, req.body);
+
     const pool = await getConnection();
-
-    const query = validations(parameter, req.body);
-
-    const connection = await pool.getConnection();
+    connection = await pool.getConnection();
     const [rows, fields] = await connection.execute(query);
     res.json(rows);
-    connection.release();
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
+  } finally {
+    if (connection) {
+      await connection.release();
+    }
   }
 };
 
@@ -30,9 +34,9 @@ const validations = async (parameter, content) => {
         throw new Error(`Campo vacío, por favor rellenar todos los campos`);
       } else {
         const values = {
-          nombre: lenghtValidation(nombre, 60),
-          barcode: uniqueValidation("barcode", "productos", barcode),
-          presentacion: lenghtValidation(nombre, 25),
+          nombre: await lenghtValidation(nombre, 60),
+          barcode: await uniqueValidation("barcode", "productos", barcode),
+          presentacion: await lenghtValidation(nombre, 25),
         };
         return `INTERT INTO productos(nombre,barcode, presentacion) VALUES (${values.nombre},${values.barcode},${values.presentacion})`;
       }
@@ -44,8 +48,8 @@ const validations = async (parameter, content) => {
         throw new Error(`Campo vacío, por favor rellenar todos los campos`);
       } else {
         const values = {
-          idProducto: existValidation("id", "productos", idProducto),
-          idTienda: existValidation("id", "tiendas", idTienda),
+          idProducto: await existValidation("id", "productos", idProducto),
+          idTienda: await existValidation("id", "tiendas", idTienda),
           valor: valor,
           compraMaxima: Number(compraMaxima),
         };

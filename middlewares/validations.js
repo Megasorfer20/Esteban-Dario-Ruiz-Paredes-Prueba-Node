@@ -17,6 +17,7 @@ export const lenghtValidation = async (text, limit) => {
 };
 
 export const uniqueValidation = async (searchRow, table, value) => {
+    let connection
   try {
     if (searchRow) {
       const pool = await getConnection();
@@ -25,11 +26,8 @@ export const uniqueValidation = async (searchRow, table, value) => {
         SELECT ${searchRow} FROM ${table}
         `;
 
-      const connection = await pool.getConnection();
+      connection = await pool.getConnection();
       const [rows, fields] = await connection.execute(query);
-      console.log(rows);
-      connection.release();
-
       if (rows.includes(value)) {
         throw new Error(
           `El campo debe ser único, por favor cambiar valor de ${searchRow}`
@@ -42,10 +40,15 @@ export const uniqueValidation = async (searchRow, table, value) => {
     }
   } catch (error) {
     console.error(error);
+  } finally {
+    if (connection) {
+      await connection.release();
+    }
   }
 };
 
 export const existValidation = async (searchRow, table, value) => {
+    let connection
   try {
     if (searchRow) {
       const pool = await getConnection();
@@ -54,11 +57,8 @@ export const existValidation = async (searchRow, table, value) => {
           SELECT ${searchRow} FROM ${table}
           `;
 
-      const connection = await pool.getConnection();
+      connection = await pool.getConnection();
       const [rows, fields] = await connection.execute(query);
-      console.log(rows);
-      connection.release();
-
       if (rows.includes(value)) {
         return value;
       } else {
@@ -71,5 +71,9 @@ export const existValidation = async (searchRow, table, value) => {
     }
   } catch (error) {
     console.error(error);
+  }  finally {
+    if (connection) {
+      await connection.release();
+    }
   }
 };
