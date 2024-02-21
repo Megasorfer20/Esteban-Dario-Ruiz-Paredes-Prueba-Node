@@ -1,6 +1,9 @@
 import { getConnection } from "../database/dbconection.js";
-import { existValidation, lenghtValidation, uniqueValidation } from "../middlewares/validations.js";
-
+import {
+  existValidation,
+  lenghtValidation,
+  uniqueValidation,
+} from "../middlewares/validations.js";
 
 export const postParameter = async (req, res) => {
   try {
@@ -21,17 +24,16 @@ export const postParameter = async (req, res) => {
 
 const validations = async (parameter, content) => {
   try {
-    
     if (parameter === "productos") {
       const { nombre, barcode, presentacion } = content;
       if (!nombre || !barcode || !presentacion) {
         throw new Error(`Campo vacío, por favor rellenar todos los campos`);
       } else {
         const values = {
-            nombre: lenghtValidation(nombre,60),
-            barcode: uniqueValidation("barcode","productos",barcode),
-            presentacion: lenghtValidation(nombre,25)
-        }
+          nombre: lenghtValidation(nombre, 60),
+          barcode: uniqueValidation("barcode", "productos", barcode),
+          presentacion: lenghtValidation(nombre, 25),
+        };
         return `INTERT INTO productos(nombre,barcode, presentacion) VALUES (${values.nombre},${values.barcode},${values.presentacion})`;
       }
     }
@@ -41,13 +43,12 @@ const validations = async (parameter, content) => {
       if (!idProducto || !idTienda || !valor || !compraMaxima) {
         throw new Error(`Campo vacío, por favor rellenar todos los campos`);
       } else {
-        
         const values = {
-            idProducto: existValidation(nombre,60),
-            idTienda: existValidation(idTienda),
-            valor: valor,
-            compraMaxima: Number(compraMaxima)
-        }
+          idProducto: existValidation("id", "productos", idProducto),
+          idTienda: existValidation("id", "tiendas", idTienda),
+          valor: valor,
+          compraMaxima: Number(compraMaxima),
+        };
         return `INTERT INTO tiendas_productos(id_producto,id_tienda, valor, compra_maxima) VALUES (${values.idProducto},${values.idTienda},${values.valor},${values.compraMaxima})`;
       }
     }
