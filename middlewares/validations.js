@@ -3,7 +3,7 @@ import { getConnection } from "../database/dbconection.js";
 export const lenghtValidation = async (text, limit) => {
   try {
     if (text) {
-      if (text.lenght <= limit) {
+      if (text.length <= limit) {
         return text;
       } else {
         throw new Error(`Se excedió del límite de carácteres`);
@@ -13,7 +13,6 @@ export const lenghtValidation = async (text, limit) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
   }
 };
 
@@ -43,7 +42,6 @@ export const uniqueValidation = async (searchRow, table, value) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
   }
 };
 
@@ -73,6 +71,5 @@ export const existValidation = async (searchRow, table, value) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
   }
 };
