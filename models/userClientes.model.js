@@ -63,8 +63,3 @@ export const UserClientes = sequelize.define(
   }
 );
 
-UserClientes.belongsTo(Users, { foreignKey: "id_user", targetKey: "id" });
-UserClientes.belongsTo(UsersDirecciones, {
-  foreignKey: "id_direccion",
-  targetKey: "id",
-});

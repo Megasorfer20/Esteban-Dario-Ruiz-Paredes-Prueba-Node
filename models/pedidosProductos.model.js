@@ -67,15 +67,3 @@ export const PedidosProductos = sequelize.define(
   }
 );
 
-PedidosProductos.belongsTo(Pedidos, {
-  foreignKey: "id_pedido",
-  targetKey: "id",
-});
-PedidosProductos.belongsTo(Promociones, {
-  foreignKey: "id_promocion",
-  targetKey: "id",
-});
-PedidosProductos.belongsTo(Productos, {
-  foreignKey: "id_producto",
-  targetKey: "id",
-});

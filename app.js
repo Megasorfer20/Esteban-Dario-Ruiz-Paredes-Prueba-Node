@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
 import router from "./routes/query.router.js";
+import { inicializationModels } from "./database/inicialiceDatabses.controller.js";
 
 config();
 
@@ -13,6 +14,7 @@ export default class Server {
 
     this.middleware();
     this.routes();
+    this.initialization()
   }
 
   middleware() {
@@ -29,5 +31,9 @@ export default class Server {
     this.app.listen(this.port, () => {
       console.log(`App running in port ${this.port}`);
     });
+  }
+
+  async initialization () {
+    await inicializationModels()
   }
 }

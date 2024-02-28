@@ -49,16 +49,3 @@ export const TiendasProductos = sequelize.define(
     engine: "InnoDB",
   }
 );
-
-TiendasProductos.belongsTo(Promociones, {
-  foreignKey: "id_promocion",
-  targetKey: "id",
-});
-TiendasProductos.belongsTo(Tiendas, {
-  foreignKey: "id_tienda",
-  targetKey: "id",
-});
-TiendasProductos.belongsTo(Productos, {
-  foreignKey: "id_producto",
-  targetKey: "id",
-});

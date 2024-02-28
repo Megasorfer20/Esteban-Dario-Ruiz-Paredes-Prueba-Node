@@ -109,11 +109,4 @@ export const Pedidos = sequelize.define(
   }
 );
 
-Pedidos.belongsTo(Tiendas, {
-  foreignKey: "id_tienda",
-  targetKey: "id",
-});
-Pedidos.belongsTo(Users, {
-  foreignKey: "id_user",
-  targetKey: "id",
-});
+

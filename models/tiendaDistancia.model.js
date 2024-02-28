@@ -46,7 +46,4 @@ export const TiendasDistanias = sequelize.define(
   }
 );
 
-TiendasDistanias.belongsTo(Tiendas, {
-  foreignKey: "id_tienda",
-  targetKey: "id",
-});
+

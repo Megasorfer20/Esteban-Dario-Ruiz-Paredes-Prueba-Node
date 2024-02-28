@@ -19,21 +19,6 @@ export const declarationDB = () => {
 
 export const getConnection = async () => {
   try {
-    const connection = mysql.createPool({
-      host: process.env.HOST,
-      database: process.env.DATABASE,
-      user: process.env.DUSER,
-      password: process.env.PASSWORD,
-    });
-    console.log(`se conectó a la base de datos 👍`);
-    return connection;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const getConnection2 = async () => {
-  try {
     const sequelize = declarationDB();
     await sequelize.sync()
     await sequelize.authenticate();

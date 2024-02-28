@@ -48,16 +48,3 @@ export const Carritos = sequelize.define(
     collate: "utf8mb4_unicode_ci",
   }
 );
-
-Carritos.belongsTo(Tiendas, {
-  foreignKey: "id_tienda",
-  targetKey: "id",
-});
-Carritos.belongsTo(Users, {
-  foreignKey: "id_user",
-  targetKey: "id",
-});
-Carritos.belongsTo(Productos, {
-  foreignKey: "id_producto",
-  targetKey: "id",
-});

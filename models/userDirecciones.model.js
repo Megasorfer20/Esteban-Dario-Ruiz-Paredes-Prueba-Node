@@ -42,5 +42,3 @@ export const UsersDirecciones = sequelize.define(
     engine: "InnoDB",
   }
 );
-
-UsersDirecciones.belongsTo(Users, { foreignKey: "id_user", targetKey: "id" });

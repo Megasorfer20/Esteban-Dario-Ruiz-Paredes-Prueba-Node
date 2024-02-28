@@ -36,6 +36,7 @@ export const Productos = sequelize.define(
       type: DataTypes.STRING(30),
       allowNull: false,
       comment: "Código de barras",
+      unique: true,
     },
     nombre: {
       type: DataTypes.STRING(60),
@@ -59,7 +60,7 @@ export const Productos = sequelize.define(
     peso: {
       type: DataTypes.DECIMAL(6, 2),
       allowNull: false,
-      defaultValue: 0.00,
+      defaultValue: 0.0,
       comment: "En Kilogramos",
     },
   },

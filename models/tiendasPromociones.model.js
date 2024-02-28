@@ -49,12 +49,3 @@ export const TiendasPromociones = sequelize.define(
     collate: "utf8mb4_unicode_ci",
   }
 );
-
-TiendasPromociones.belongsTo(Tiendas, {
-  foreignKey: "id_tienda",
-  targetKey: "id",
-});
-TiendasPromociones.belongsTo(Promociones, {
-  foreignKey: "id_promocion",
-  targetKey: "id",
-});

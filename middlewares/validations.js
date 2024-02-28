@@ -1,80 +1,59 @@
-import { getConnection } from "../database/dbconection.js";
-
 export const lenghtValidation = async (text, limit) => {
-  try {
-    if (text) {
-      if (text.length <= limit) {
-        return text;
-      } else {
-        throw new Error(`Se excedió del límite de carácteres`);
-      }
+  if (text) {
+    if (text.length <= limit) {
+      return text;
     } else {
-      throw new Error(`Campo vacío, por favor rellenar todos los campos`);
+      throw new Error(`Se excedió del límite de carácteres`);
     }
-  } catch (error) {
-    console.error(error);
+  } else {
+    throw new Error(`Campo vacío, por favor rellenar todos los campos`);
   }
 };
 
 export const uniqueValidation = async (searchRow, table, value) => {
-    let connection
-  try {
-    if (searchRow) {
-      const pool = await getConnection();
+  if (searchRow) {
+    const parameter = await table.findOne({
+      where: { [searchRow]: value },
+    });
 
-      const query = `
-        SELECT ${searchRow} FROM ${table}
-        `;
-
-      connection = await pool.getConnection();
-      const [rows, fields] = await connection.execute(query);
-      if (rows.includes(value)) {
-        throw new Error(
-          `El campo debe ser único, por favor cambiar valor de ${searchRow}`
-        );
-      } else {
-        return value;
-      }
+    if (parameter) {
+      throw new Error(
+        `El campo debe ser único, por favor cambiar valor de ${searchRow}`
+      );
     } else {
-      throw new Error(`Campo vacío, por favor rellenar todos los campos`);
+      return value;
     }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    if (connection) {
-      await connection.release();
-    }
+  } else {
+    throw new Error(`Campo vacío, por favor rellenar todos los campos`);
   }
 };
 
 export const existValidation = async (searchRow, table, value) => {
-    let connection
-  try {
-    if (searchRow) {
-      const pool = await getConnection();
+  if (searchRow) {
+    const parameter = table.findOne({
+      where: { [searchRow]: value },
+    });
 
-      const query = `
-          SELECT ${searchRow} FROM ${table}
-          `;
-
-      connection = await pool.getConnection();
-      const [rows, fields] = await connection.execute(query);
-      console.log(rows);
-      if (rows.includes({id: value})) {
-        return value;
-      } else {
-        throw new Error(
-          `El campo debe ser existente, por favor cambiar valor de ${searchRow}`
-        );
-      }
+    if (parameter) {
+      return value;
     } else {
-      throw new Error(`Campo vacío, por favor rellenar todos los campos`);
+      throw new Error(
+        `El campo debe ser existente, por favor cambiar valor de ${searchRow}`
+      );
     }
-  } catch (error) {
-    console.error(error);
-  }  finally {
-    if (connection) {
-      await connection.release();
+  } else {
+    throw new Error(`Campo vacío, por favor rellenar todos los campos`);
+  }
+};
+
+export const numberValdation = async (value) => {
+  if (value) {
+    if (!isNaN(value)) {
+      return Number(value);
+    } else {
+      throw new Error(`Este campo debe ser un número`);
     }
+  } else {
+    throw new Error(`Campo vacío, por favor rellenar todos los campos`);
   }
 };

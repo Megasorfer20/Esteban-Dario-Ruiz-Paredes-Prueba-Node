@@ -43,4 +43,4 @@ export const PedidoEstados = sequelize.define(
   }
 );
 
-PedidoEstados.belongsTo(Pedidos, { foreignKey: "id_pedido", targetKey: "id" });
+

@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { declarationDB } from "../database/dbconection.js";
+import { TiendasPromociones } from "./tiendasPromociones.model.js";
 
 const sequelize = declarationDB();
 
@@ -54,3 +55,4 @@ export const Promociones = sequelize.define(
     engine: "InnoDB",
   }
 );
+
