@@ -42,5 +42,3 @@ export const PedidoEstados = sequelize.define(
     collate: "utf8mb4_unicode_ci",
   }
 );
-
-

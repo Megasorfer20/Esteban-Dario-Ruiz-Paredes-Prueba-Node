@@ -1,3 +1,5 @@
+// Importamos los modelos de la base de datos
+
 import { Carritos } from "../models/carritos.model.js";
 import { Pedidos } from "../models/pedidos.model.js";
 import { PedidoEstados } from "../models/pedidosEstados.model.js";
@@ -12,7 +14,10 @@ import { UserClientes } from "../models/userClientes.model.js";
 import { UsersDirecciones } from "../models/userDirecciones.model.js";
 import { Users } from "../models/users.model.js";
 
+// Esta función sincroniza los modelos con la base de datos y establece las relaciones entre ellos
+
 export const inicializationModels = async () => {
+  // Sincronizamos cada modelo con la base de datos
   await Carritos.sync();
   await Pedidos.sync();
   await PedidoEstados.sync();
@@ -26,6 +31,9 @@ export const inicializationModels = async () => {
   await UserClientes.sync();
   await UsersDirecciones.sync();
   await Users.sync();
+
+  // Establecemos las relaciones entre los modelos
+  // Cada relación se define en términos de pertenencia (belongsTo) o propiedad (hasMany)
 
   Carritos.belongsTo(Tiendas, {
     foreignKey: "id_tienda",
@@ -51,6 +59,14 @@ export const inicializationModels = async () => {
     foreignKey: "id_pedido",
     targetKey: "id",
   });
+  Pedidos.hasMany(PedidoEstados, {
+    foreignKey: "id_pedido",
+    sourceKey: "id",
+  });
+  Pedidos.hasMany(PedidosProductos, {
+    foreignKey: "id_pedido",
+    sourceKey: "id",
+  });
   PedidosProductos.belongsTo(Pedidos, {
     foreignKey: "id_pedido",
     targetKey: "id",
@@ -70,6 +86,11 @@ export const inicializationModels = async () => {
   TiendasDistanias.belongsTo(Tiendas, {
     foreignKey: "id_tienda",
     targetKey: "id",
+  });
+  Tiendas.hasMany(TiendasDistanias, {
+    foreignKey: "id_tienda",
+    sourceKey: "id",
+    as: "tiendas_distancias",
   });
   TiendasProductos.belongsTo(Promociones, {
     foreignKey: "id_promocion",
@@ -91,7 +112,12 @@ export const inicializationModels = async () => {
     foreignKey: "id_promocion",
     targetKey: "id",
   });
+  Users.hasMany(UsersDirecciones, { foreignKey: "id_user", sourceKey: "id" });
   UserClientes.belongsTo(Users, { foreignKey: "id_user", targetKey: "id" });
+  UsersDirecciones.hasMany(UserClientes, {
+    foreignKey: "id_direccion",
+    sourceKey: "id",
+  });
   UserClientes.belongsTo(UsersDirecciones, {
     foreignKey: "id_direccion",
     targetKey: "id",

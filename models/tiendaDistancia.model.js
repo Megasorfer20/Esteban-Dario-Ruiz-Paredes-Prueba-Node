@@ -5,7 +5,7 @@ import { Tiendas } from "./tiendas.model.js";
 const sequelize = declarationDB();
 
 export const TiendasDistanias = sequelize.define(
-  "tiendas_distranias",
+  "tiendas_distancias",
   {
     id: {
       type: DataTypes.MEDIUMINT.UNSIGNED,
@@ -36,7 +36,7 @@ export const TiendasDistanias = sequelize.define(
     },
   },
   {
-    tableName: "tiendas_distranias",
+    tableName: "tiendas_distancias",
     timestamps: false,
     comment:
       "Son los valores de Domicilio o Envío de una Tienda, respecto a la distancia con el Cliente",
@@ -45,5 +45,3 @@ export const TiendasDistanias = sequelize.define(
     engine: "InnoDB",
   }
 );
-
-

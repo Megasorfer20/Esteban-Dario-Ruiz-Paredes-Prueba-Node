@@ -1,7 +1,5 @@
 import { DataTypes } from "sequelize";
 import { declarationDB } from "../database/dbconection.js";
-import { UsersDirecciones } from "./userDirecciones.model.js";
-import { Users } from "./users.model.js";
 
 const sequelize = declarationDB();
 
@@ -62,4 +60,3 @@ export const UserClientes = sequelize.define(
     engine: "InnoDB",
   }
 );
-

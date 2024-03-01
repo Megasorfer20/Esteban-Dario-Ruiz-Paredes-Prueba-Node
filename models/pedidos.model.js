@@ -108,5 +108,3 @@ export const Pedidos = sequelize.define(
     collate: "utf8mb4_unicode_ci",
   }
 );
-
-

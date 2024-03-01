@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { declarationDB } from "../database/dbconection.js";
-import { Users } from "./users.model.js";
 
 const sequelize = declarationDB();
 
